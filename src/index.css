@@ -1,0 +1,41 @@
+/* Global reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Make sure the main content has nice spacing under the navbar */
+#root {
+  min-height: 100vh;
+}
+
+/* Simple helpful utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Make tables and forms a bit nicer on small screens */
+@media (max-width: 700px) {
+  .equipment-table,
+  .history-table {
+    font-size: 0.85rem;
+  }
+
+  .equipment-table th,
+  .equipment-table td,
+  .history-table th,
+  .history-table td {
+    padding: 6px 4px;
+  }
+}
