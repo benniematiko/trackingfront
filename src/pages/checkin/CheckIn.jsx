@@ -18,7 +18,8 @@ function CheckIn() {
   useEffect(() => {
     const fetchCheckedOutEquipment = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/equipment', {
+        // const response = await fetch('http://localhost:5000/api/equipment', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,7 +48,10 @@ function CheckIn() {
     setMessage('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/transactions/checkin', {
+     
+      
+      // const response = await fetch('http://localhost:5000/api/transactions/checkin', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/transactions/checkin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +77,8 @@ function CheckIn() {
       setNotes('');
 
       // Refresh the list
-      const refresh = await fetch('http://localhost:5000/api/equipment', {
+      // const refresh = await fetch('http://localhost:5000/api/equipment', {
+      const refresh = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

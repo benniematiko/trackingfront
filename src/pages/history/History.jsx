@@ -12,7 +12,8 @@ function History() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/transactions', {
+        // const response = await fetch('http://localhost:5000/api/transactions', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/transactions`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

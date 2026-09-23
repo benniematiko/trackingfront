@@ -55,7 +55,8 @@ function Equipment() {
       params.set('page', page);
       params.set('limit', limit);
 
-      const response = await fetch(`http://localhost:5000/api/equipment?${params}`, {
+      // const response = await fetch(`http://localhost:5000/api/equipment?${params}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -130,8 +131,10 @@ function Equipment() {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/api/equipment/${editingId}`
-        : 'http://localhost:5000/api/equipment';
+        // ? `http://localhost:5000/api/equipment/${editingId}`
+        ? `${import.meta.env.VITE_API_URL}/api/equipment/${editingId}`
+        // : 'http://localhost:5000/api/equipment';
+        : `${import.meta.env.VITE_API_URL}/api/equipment';
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -160,7 +163,8 @@ function Equipment() {
     if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/equipment/${id}`, {
+      // const response = await fetch(`http://localhost:5000/api/equipment/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -178,6 +182,7 @@ function Equipment() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
+      // const response = await fetch(`http://localhost:5000/api/equipment/${id}/status`, {
       const response = await fetch(`http://localhost:5000/api/equipment/${id}/status`, {
         method: 'PATCH',
         headers: {
