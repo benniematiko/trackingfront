@@ -29,7 +29,8 @@ const CheckOut = () => {
         throw new Error('No token found. Please login first.');
       }
 
-      const res = await fetch('http://localhost:5000/api/equipment', {
+      // const res = await fetch('http://localhost:5000/api/equipment', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment`, {
         method: 'GET',
         headers: getAuthHeaders(),
       });
@@ -64,7 +65,8 @@ const CheckOut = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/transactions/checkout', {
+      // const res = await fetch('http://localhost:5000/api/transactions/checkout', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/transactions/checkout`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({
