@@ -134,13 +134,13 @@ function Equipment() {
         // ? `http://localhost:5000/api/equipment/${editingId}`
         ? `${import.meta.env.VITE_API_URL}/api/equipment/${editingId}`
         // : 'http://localhost:5000/api/equipment';
-        : `${import.meta.env.VITE_API_URL}/api/equipment';
+        : `${import.meta.env.VITE_API_URL}/api/equipment`;
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',         
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
