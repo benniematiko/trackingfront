@@ -183,7 +183,7 @@ function Equipment() {
   const handleStatusChange = async (id, newStatus) => {
     try {
       // const response = await fetch(`http://localhost:5000/api/equipment/${id}/status`, {
-      const response = await fetch(`http://localhost:5000/api/equipment/${id}/status`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment/${id}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
