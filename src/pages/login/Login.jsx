@@ -47,7 +47,8 @@ function Login() {
   return (
     <div className="login-page">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Equipment Tracker Login</h1>
+        <h1>Interior Consult Limited</h1>
+        <h2>Login Here</h2>
         <p>Enter your credentials to continue</p>
 
         {error && <div className="error-message">{error}</div>}
@@ -78,7 +79,7 @@ function Login() {
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
         <p className="switch-link">
-          Don't have an account? <Link to="/register">Register</Link>
+          {/* Don't have an account? <Link to="/register">Register</Link> */}
         </p>
         </form>
     </div>

@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className="home">
       <header className="home-header">
-        <h1>Construction Equipment Tracker</h1>
+        <h1>Interior Consult Ltd - Equipment Tracker</h1>
         <p>Keep track of every tool and machine on your construction sites.</p>
       </header>
 

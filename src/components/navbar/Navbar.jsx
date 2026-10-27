@@ -15,7 +15,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/" className="logo">
-          Equipment Tracker
+          Interior Consult Limited
         </Link>
       </div>
 
