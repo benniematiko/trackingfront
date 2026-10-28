@@ -38,7 +38,12 @@
   color: #38bdf8;
 }
 
-/* ========== Navigation Links ========== */
+/* ========== Navigation Links (Desktop) ========== */
+.nav-center {
+  display: flex;
+  align-items: center;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -46,49 +51,51 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  justify-content: center;
 }
 
+/* Ensure navigation link text is clearly visible everywhere */
 .nav-links li a {
   display: block;
   padding: 8px 14px;
-  color: #cbd5e1;
+  color: #f1f2f3 !important; /* Forces high-visibility white/slate color */
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
-  border-radius: 0; /* No border radius */
+  border-radius: 0;
   transition: all 0.2s ease;
 }
 
 .nav-links li a:hover {
-  color: #f8fafc;
+  color: #d5d9db !important;
   background-color: rgba(56, 189, 248, 0.12);
 }
 
-.nav-links li a:active {
-  background-color: rgba(56, 189, 248, 0.2);
+/* ========== Right-End Alignment Container ========== */
+.navbar-right-end {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto; /* Ensures login or user elements stay locked to the far right */
 }
 
-/* Login link (when logged out) - Pushed to the far right */
 .login-link {
   background-color: #2563eb !important;
   color: #fff !important;
   padding: 8px 18px !important;
-  border-radius: 0 !important; /* No border radius */
-  margin-left: auto; /* Keeps it locked at the right end */
+  border-radius: 0 !important;
+  font-weight: 600;
 }
 
 .login-link:hover {
   background-color: #1d4ed8 !important;
 }
 
-/* ========== User Info (When Logged In) ========== */
+/* ========== Desktop User Info ========== */
 .user-info {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
-  margin-left: auto; /* Forces the user info & logout button to the far right end */
 }
 
 .user-badge {
@@ -117,7 +124,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 0; /* No border radius */
+  border-radius: 0;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -129,49 +136,167 @@
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
 }
 
-.logout-btn:active {
-  transform: translateY(0);
+/* Hidden by default on desktop */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
 }
 
-/* ========== Responsive ========== */
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: #f8fafc;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger to "X" transformation */
+.hamburger-btn.open .hamburger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile-backdrop {
+  display: none;
+}
+
+.mobile-user-section {
+  display: none;
+}
+
+
+
+/* ========== Mobile Responsive (Right-to-Left 80% Drawer) ========== */
 @media (max-width: 900px) {
-  .navbar-content {
-    width: 92%; /* Slightly wider on smaller screens for better spacing */
-    flex-wrap: wrap;
-    padding: 12px 0;
-    gap: 12px;
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* Backdrop Overlay */
+  .mobile-backdrop.active {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  /* 80% Width Right-to-Left Sliding Drawer */
+  .nav-center {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: #0b1329;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 80px 32px 32px 32px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 1px solid #1e293b;
+    border-radius: 0;
+  }
+
+  .nav-center.active {
+    right: 0; /* Slide into view */
   }
 
   .nav-links {
-    order: 3;
+    flex-direction: column;
     width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    gap: 12px;
+  }
+
+  /* FIX: Ensure items start hidden and explicitly animate to full visibility */
+  .nav-center .nav-links li,
+  .nav-center .mobile-user-section {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  .nav-center.active .nav-links li,
+  .nav-center.active .mobile-user-section {
+    animation: slideInStaggered 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(0.08s * var(--item-index));
   }
 
   .nav-links li a {
-    white-space: nowrap;
-    font-size: 0.9rem;
-    padding: 6px 12px;
+    font-size: 1.1rem;
+    padding: 12px 16px;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #f8fafc !important; /* Forces visible text color */
   }
 
-  .user-badge {
-    align-items: flex-start;
+  .mobile-user-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #1e293b;
+    width: 100%;
+    color: #f8fafc;
+  }
+
+  .mobile-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mobile-user-info .user-name {
+    color: #f8fafc !important;
+    font-size: 1.05rem;
+  }
+
+  .mobile-user-info .user-role {
+    color: #94a3b8 !important;
+  }
+
+  .mobile-logout {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
   }
 }
 
-@media (max-width: 480px) {
-  .logo {
-    font-size: 1.15rem;
+/* Updated Keyframes guaranteeing final opacity state */
+@keyframes slideInStaggered {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
   }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-  .user-name {
-    font-size: 0.85rem;
-  }
-
-  .logout-btn {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
