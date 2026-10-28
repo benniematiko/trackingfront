@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
 import './Login.css';
 
 function Login() {
@@ -19,7 +18,6 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch('http://localhost:5000/api/auth/login', {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,14 +45,16 @@ function Login() {
   return (
     <div className="login-page">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Interior Consult Limited</h1>
-        <h2>Login Here</h2>
-        <p>Enter your credentials to continue</p>
+        <div className="form-header">
+          <h1>Interior Consult Limited</h1>
+          <h2>Welcome Back</h2>
+          <p>Please enter your credentials to access your account</p>
+        </div>
 
         {error && <div className="error-message">{error}</div>}
 
-        <label>
-          Email
+        <div className="input-group">
+          <label>Email Address</label>
           <input
             type="email"
             value={email}
@@ -62,26 +62,23 @@ function Login() {
             placeholder="you@company.com"
             required
           />
-        </label>
+        </div>
 
-        <label>
-          Password
+        <div className="input-group">
+          <label>Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Your password"
+            placeholder="••••••••"
             required
           />
-        </label>
+        </div>
 
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} className="login-btn">
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
-        <p className="switch-link">
-          {/* Don't have an account? <Link to="/register">Register</Link> */}
-        </p>
-        </form>
+      </form>
     </div>
   );
 }
