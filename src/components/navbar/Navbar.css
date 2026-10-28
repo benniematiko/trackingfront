@@ -1,23 +1,24 @@
-/* ========== Navbar Container ========== */
+/* ========== Navbar Full-Width Outer Wrapper ========== */
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  /* 86% width, centered on the page */
-  width: 86%;
-  margin: 0 auto;
-  padding: 14px 0; /* Horizontal padding removed since width is controlled by 86% */
-  background: transparent; /* Move background to a full-width wrapper if you want a full-bleed background, or keep it on .navbar */
+  width: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #f8fafc;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* NOTE: If you want the background color/gradient to span the full width of the screen 
-   while keeping the content inside at 86%, wrap your Navbar items in a inner wrapper or 
-   apply the background to a parent element. Keeping it simple here with 86% width bounds: */
+/* ========== Inner Content Container (86% Width & Centered) ========== */
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 86%;
+  margin: 0 auto;
+  padding: 14px 0;
+}
 
 /* ========== Logo ========== */
 .navbar-left {
@@ -55,7 +56,7 @@
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
-  border-radius: 0; /* Removed border-radius */
+  border-radius: 0; /* No border radius */
   transition: all 0.2s ease;
 }
 
@@ -73,7 +74,7 @@
   background-color: #2563eb !important;
   color: #fff !important;
   padding: 8px 18px !important;
-  border-radius: 0 !important; /* Removed border-radius */
+  border-radius: 0 !important; /* No border radius */
   margin-left: auto; /* Keeps it locked at the right end */
 }
 
@@ -116,7 +117,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 0; /* Removed border-radius */
+  border-radius: 0; /* No border radius */
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -134,8 +135,8 @@
 
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
-  .navbar {
-    width: 92%; /* Slightly wider on smaller screens for usability */
+  .navbar-content {
+    width: 92%; /* Slightly wider on smaller screens for better spacing */
     flex-wrap: wrap;
     padding: 12px 0;
     gap: 12px;
