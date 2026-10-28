@@ -55,7 +55,6 @@ function Equipment() {
       params.set('page', page);
       params.set('limit', limit);
 
-      // const response = await fetch(`http://localhost:5000/api/equipment?${params}`, {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -131,16 +130,14 @@ function Equipment() {
 
     try {
       const url = editingId
-        // ? `http://localhost:5000/api/equipment/${editingId}`
         ? `${import.meta.env.VITE_API_URL}/api/equipment/${editingId}`
-        // : 'http://localhost:5000/api/equipment';
         : `${import.meta.env.VITE_API_URL}/api/equipment`;
       const method = editingId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',         
+          'Content-Type': 'application/json',        
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
@@ -163,7 +160,6 @@ function Equipment() {
     if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return;
 
     try {
-      // const response = await fetch(`http://localhost:5000/api/equipment/${id}`, {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
@@ -182,7 +178,6 @@ function Equipment() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      // const response = await fetch(`http://localhost:5000/api/equipment/${id}/status`, {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/equipment/${id}/status`, {
         method: 'PATCH',
         headers: {
@@ -229,239 +224,246 @@ function Equipment() {
   };
 
   return (
-    <div className="equipment">
-      <h1>Equipment List</h1>
+    <div className="equipment-page-wrapper">
+      <div className="equipment-container">
+        <div className="equipment-header">
+          <h1>Equipment List</h1>
+          <p>Manage and track all company assets and equipment records.</p>
+        </div>
 
-      {/* Search / Filter Bar */}
-      <div className="toolbar">
-        <input
-          type="text"
-          placeholder="Search by name, type, or serial number..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="">All Statuses</option>
-          <option value="In Store">In Store</option>
-          <option value="Checked Out">Checked Out</option>
-          <option value="Under Maintenance">Under Maintenance</option>
-          <option value="Retired">Retired</option>
-        </select>
-
-        <input
-          type="text"
-          placeholder="Filter by category..."
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        />
-
-        {isAdmin && (
-          <button onClick={() => (showForm ? cancelForm() : setShowForm(true))}>
-            {showForm ? 'Cancel' : '+ Add Equipment'}
-          </button>
-        )}
-      </div>
-
-      {/* Add / Edit Form */}
-      {isAdmin && showForm && (
-        <form className="add-form" onSubmit={handleSubmit}>
-          <h2>{editingId ? 'Edit Equipment' : 'Add New Equipment'}</h2>
-
-          {formError && <p className="error">{formError}</p>}
-
-          <div className="form-grid">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name (e.g. Excavator)"
-              value={formData.name}
-              onChange={handleFormChange}
-              required
-            />
-            <input
-              type="text"
-              name="type"
-              placeholder="Type (e.g. Heavy Machinery)"
-              value={formData.type}
-              onChange={handleFormChange}
-              required
-            />
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={formData.category}
-              onChange={handleFormChange}
-            />
-            <input
-              type="text"
-              name="serialNumber"
-              placeholder="Serial Number"
-              value={formData.serialNumber}
-              onChange={handleFormChange}
-              required
-              disabled={!!editingId}
-              title={editingId ? 'Serial number cannot be changed after creation' : ''}
-            />
-            <select name="condition" value={formData.condition} onChange={handleFormChange}>
-              <option value="New">New</option>
-              <option value="Good">Good</option>
-              <option value="Fair">Fair</option>
-              <option value="Poor">Poor</option>
-              <option value="Damaged">Damaged</option>
-            </select>
-            <input
-              type="text"
-              name="location"
-              placeholder="Location"
-              value={formData.location}
-              onChange={handleFormChange}
-            />
-            <input
-              type="url"
-              name="imageUrl"
-              placeholder="Image URL (optional)"
-              value={formData.imageUrl}
-              onChange={handleFormChange}
-            />
-            <input
-              type="date"
-              name="purchaseDate"
-              value={formData.purchaseDate}
-              onChange={handleFormChange}
-              title="Purchase date"
-            />
-            <input
-              type="number"
-              name="purchasePrice"
-              placeholder="Purchase Price"
-              min="0"
-              step="0.01"
-              value={formData.purchasePrice}
-              onChange={handleFormChange}
-            />
-            <input
-              type="date"
-              name="lastMaintenanceDate"
-              value={formData.lastMaintenanceDate}
-              onChange={handleFormChange}
-              title="Last maintenance date"
-            />
-            <input
-              type="date"
-              name="nextMaintenanceDate"
-              value={formData.nextMaintenanceDate}
-              onChange={handleFormChange}
-              title="Next maintenance date"
-            />
-          </div>
-
-          <textarea
-            name="notes"
-            placeholder="Notes (optional)"
-            value={formData.notes}
-            onChange={handleFormChange}
-            rows="2"
+        {/* Search / Filter Bar */}
+        <div className="toolbar">
+          <input
+            type="text"
+            placeholder="Search by name, type, or serial number..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
-          <div className="form-actions">
-            <button type="submit">{editingId ? 'Save Changes' : 'Add Equipment'}</button>
-            <button type="button" onClick={cancelForm}>
-              Cancel
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="">All Statuses</option>
+            <option value="In Store">In Store</option>
+            <option value="Checked Out">Checked Out</option>
+            <option value="Under Maintenance">Under Maintenance</option>
+            <option value="Retired">Retired</option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="Filter by category..."
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          />
+
+          {isAdmin && (
+            <button className="add-toggle-btn" onClick={() => (showForm ? cancelForm() : setShowForm(true))}>
+              {showForm ? 'Cancel' : '+ Add Equipment'}
             </button>
-          </div>
-        </form>
-      )}
+          )}
+        </div>
 
-      {loading && <p>Loading equipment...</p>}
-      {error && <p className="error">Error: {error}</p>}
+        {/* Add / Edit Form */}
+        {isAdmin && showForm && (
+          <form className="add-form" onSubmit={handleSubmit}>
+            <h2>{editingId ? 'Edit Equipment' : 'Add New Equipment'}</h2>
 
-      {!loading && !error && (
-        <>
-          <table className="equipment-table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th onClick={() => handleSort('name')} className="sortable">
-                  Name{sortArrow('name')}
-                </th>
-                <th>Type</th>
-                <th>Category</th>
-                <th>Serial Number</th>
-                <th onClick={() => handleSort('status')} className="sortable">
-                  Status{sortArrow('status')}
-                </th>
-                <th>Condition</th>
-                <th>Location</th>
-                <th>Checked Out To</th>
-                <th onClick={() => handleSort('nextMaintenanceDate')} className="sortable">
-                  Next Maintenance{sortArrow('nextMaintenanceDate')}
-                </th>
-                <th>Change Status</th>
-                {isAdmin && <th>Actions</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {equipmentList.length === 0 ? (
+            {formError && <p className="error">{formError}</p>}
+
+            <div className="form-grid">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name (e.g. Excavator)"
+                value={formData.name}
+                onChange={handleFormChange}
+                required
+              />
+              <input
+                type="text"
+                name="type"
+                placeholder="Type (e.g. Heavy Machinery)"
+                value={formData.type}
+                onChange={handleFormChange}
+                required
+              />
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                value={formData.category}
+                onChange={handleFormChange}
+              />
+              <input
+                type="text"
+                name="serialNumber"
+                placeholder="Serial Number"
+                value={formData.serialNumber}
+                onChange={handleFormChange}
+                required
+                disabled={!!editingId}
+                title={editingId ? 'Serial number cannot be changed after creation' : ''}
+              />
+              <select name="condition" value={formData.condition} onChange={handleFormChange}>
+                <option value="New">New</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor">Poor</option>
+                <option value="Damaged">Damaged</option>
+              </select>
+              <input
+                type="text"
+                name="location"
+                placeholder="Location"
+                value={formData.location}
+                onChange={handleFormChange}
+              />
+              <input
+                type="url"
+                name="imageUrl"
+                placeholder="Image URL (optional)"
+                value={formData.imageUrl}
+                onChange={handleFormChange}
+              />
+              <input
+                type="date"
+                name="purchaseDate"
+                value={formData.purchaseDate}
+                onChange={handleFormChange}
+                title="Purchase date"
+              />
+              <input
+                type="number"
+                name="purchasePrice"
+                placeholder="Purchase Price"
+                min="0"
+                step="0.01"
+                value={formData.purchasePrice}
+                onChange={handleFormChange}
+              />
+              <input
+                type="date"
+                name="lastMaintenanceDate"
+                value={formData.lastMaintenanceDate}
+                onChange={handleFormChange}
+                title="Last maintenance date"
+              />
+              <input
+                type="date"
+                name="nextMaintenanceDate"
+                value={formData.nextMaintenanceDate}
+                onChange={handleFormChange}
+                title="Next maintenance date"
+              />
+            </div>
+
+            <textarea
+              name="notes"
+              placeholder="Notes (optional)"
+              value={formData.notes}
+              onChange={handleFormChange}
+              rows="2"
+            />
+
+            <div className="form-actions">
+              <button type="submit">{editingId ? 'Save Changes' : 'Add Equipment'}</button>
+              <button type="button" onClick={cancelForm}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+
+        {loading && <p className="equipment-status">Loading equipment...</p>}
+        {error && <p className="equipment-status error">Error: {error}</p>}
+
+        {!loading && !error && (
+          <div className="table-responsive">
+            <table className="equipment-table">
+              <thead>
                 <tr>
-                  <td colSpan={isAdmin ? 12 : 11}>No equipment found.</td>
+                  <th>Image</th>
+                  <th onClick={() => handleSort('name')} className="sortable">
+                    Name{sortArrow('name')}
+                  </th>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Serial Number</th>
+                  <th onClick={() => handleSort('status')} className="sortable">
+                    Status{sortArrow('status')}
+                  </th>
+                  <th>Condition</th>
+                  <th>Location</th>
+                  <th>Checked Out To</th>
+                  <th onClick={() => handleSort('nextMaintenanceDate')} className="sortable">
+                    Next Maintenance{sortArrow('nextMaintenanceDate')}
+                  </th>
+                  <th>Change Status</th>
+                  {isAdmin && <th>Actions</th>}
                 </tr>
-              ) : (
-                equipmentList.map((item) => {
-                  const maintFlag = getMaintenanceFlag(item);
-                  return (
-                    <tr key={item._id} className={maintFlag ? `maint-${maintFlag}` : ''}>
-                      <td>
-                        {item.imageUrl ? (
-                          <img src={item.imageUrl} alt={item.name} className="thumb" />
-                        ) : (
-                          '—'
-                        )}
-                      </td>
-                      <td>{item.name}</td>
-                      <td>{item.type}</td>
-                      <td>{item.category}</td>
-                      <td>{item.serialNumber}</td>
-                      <td>{item.status}</td>
-                      <td>{item.condition}</td>
-                      <td>{item.location}</td>
-                      <td>{item.checkedOutTo ? item.checkedOutTo.name : '—'}</td>
-                      <td>
-                        {item.nextMaintenanceDate
-                          ? new Date(item.nextMaintenanceDate).toLocaleDateString()
-                          : '—'}
-                        {maintFlag === 'overdue' && ' ⚠️ Overdue'}
-                        {maintFlag === 'due-soon' && ' ⏰ Due soon'}
-                      </td>
-                      <td>
-                        <select
-                          value={item.status}
-                          onChange={(e) => handleStatusChange(item._id, e.target.value)}
-                          disabled={!isAdmin}
-                        >
-                          <option value="In Store">In Store</option>
-                          <option value="Checked Out">Checked Out</option>
-                          <option value="Under Maintenance">Under Maintenance</option>
-                          <option value="Retired">Retired</option>
-                        </select>
-                      </td>
-                      {isAdmin && (
-                        <td className="actions">
-                          <button onClick={() => startEdit(item)}>Edit</button>
-                          <button className="danger" onClick={() => handleDelete(item._id, item.name)}>
-                            Delete
-                          </button>
+              </thead>
+              <tbody>
+                {equipmentList.length === 0 ? (
+                  <tr>
+                    <td colSpan={isAdmin ? 12 : 11} className="no-data">No equipment found.</td>
+                  </tr>
+                ) : (
+                  equipmentList.map((item) => {
+                    const maintFlag = getMaintenanceFlag(item);
+                    return (
+                      <tr key={item._id} className={maintFlag ? `maint-${maintFlag}` : ''}>
+                        <td>
+                          {item.imageUrl ? (
+                            <img src={item.imageUrl} alt={item.name} className="thumb" />
+                          ) : (
+                            '—'
+                          )}
                         </td>
-                      )}
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
+                        <td>{item.name}</td>
+                        <td>{item.type}</td>
+                        <td>{item.category}</td>
+                        <td>{item.serialNumber}</td>
+                        <td>{item.status}</td>
+                        <td>{item.condition}</td>
+                        <td>{item.location}</td>
+                        <td>{item.checkedOutTo ? item.checkedOutTo.name : '—'}</td>
+                        <td>
+                          {item.nextMaintenanceDate
+                            ? new Date(item.nextMaintenanceDate).toLocaleDateString()
+                            : '—'}
+                          {maintFlag === 'overdue' && ' ⚠️ Overdue'}
+                          {maintFlag === 'due-soon' && ' ⏰ Due soon'}
+                        </td>
+                        <td>
+                          <select
+                            value={item.status}
+                            onChange={(e) => handleStatusChange(item._id, e.target.value)}
+                            disabled={!isAdmin}
+                          >
+                            <option value="In Store">In Store</option>
+                            <option value="Checked Out">Checked Out</option>
+                            <option value="Under Maintenance">Under Maintenance</option>
+                            <option value="Retired">Retired</option>
+                          </select>
+                        </td>
+                        {isAdmin && (
+                          <td className="actions">
+                            <button onClick={() => startEdit(item)}>Edit</button>
+                            <button className="danger" onClick={() => handleDelete(item._id, item.name)}>
+                              Delete
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-          {/* Pagination */}
+        {/* Pagination */}
+        {!loading && !error && (
           <div className="pagination">
             <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
               Previous
@@ -473,8 +475,8 @@ function Equipment() {
               Next
             </button>
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }
