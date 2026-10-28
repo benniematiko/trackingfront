@@ -4,14 +4,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 14px 32px;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  /* 86% width, centered on the page */
+  width: 86%;
+  margin: 0 auto;
+  padding: 14px 0; /* Horizontal padding removed since width is controlled by 86% */
+  background: transparent; /* Move background to a full-width wrapper if you want a full-bleed background, or keep it on .navbar */
   color: #f8fafc;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
+
+/* NOTE: If you want the background color/gradient to span the full width of the screen 
+   while keeping the content inside at 86%, wrap your Navbar items in a inner wrapper or 
+   apply the background to a parent element. Keeping it simple here with 86% width bounds: */
 
 /* ========== Logo ========== */
 .navbar-left {
@@ -39,7 +45,6 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  flex: 1;
   justify-content: center;
 }
 
@@ -50,7 +55,7 @@
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
-  border-radius: 8px;
+  border-radius: 0; /* Removed border-radius */
   transition: all 0.2s ease;
 }
 
@@ -63,23 +68,26 @@
   background-color: rgba(56, 189, 248, 0.2);
 }
 
-/* Login link (when logged out) */
+/* Login link (when logged out) - Pushed to the far right */
 .login-link {
   background-color: #2563eb !important;
   color: #fff !important;
   padding: 8px 18px !important;
+  border-radius: 0 !important; /* Removed border-radius */
+  margin-left: auto; /* Keeps it locked at the right end */
 }
 
 .login-link:hover {
   background-color: #1d4ed8 !important;
 }
 
-/* ========== User Info ========== */
+/* ========== User Info (When Logged In) ========== */
 .user-info {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
+  margin-left: auto; /* Forces the user info & logout button to the far right end */
 }
 
 .user-badge {
@@ -108,7 +116,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 0; /* Removed border-radius */
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -117,7 +125,6 @@
 
 .logout-btn:hover {
   background-color: #dc2626;
-  transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
 }
 
@@ -128,8 +135,9 @@
 /* ========== Responsive ========== */
 @media (max-width: 900px) {
   .navbar {
+    width: 92%; /* Slightly wider on smaller screens for usability */
     flex-wrap: wrap;
-    padding: 12px 20px;
+    padding: 12px 0;
     gap: 12px;
   }
 
